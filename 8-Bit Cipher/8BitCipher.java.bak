@@ -62,7 +62,7 @@ public Cipher( long moduleID, VoltageObjects voltageObjects )
 
 
 	canBeBypassed = false;
-	SetSkin( "3022f1c3de994e31bf75a3d2f3e6a6e3" );
+	SetSkin( "3d7a7e4048c7445c8848da6c49364924" );
 }
 
 void InitializeControls()
@@ -328,13 +328,13 @@ public boolean Notify( VoltageComponent component, ModuleNotifications notificat
 	
 		case Jack_Connected:   // longValue is the new cable ID
 		{
-			if(component == data1) data1Connected = true;
+			if(component == data2) data2Connected = true;
 		}
 		break;
 	
 		case Jack_Disconnected:   // All cables have been disconnected from this jack
 		{
-			if(component == data1) data1Connected = false;
+			if(component == data2) data2Connected = false;
 		}
 		break;
 	
@@ -548,16 +548,16 @@ public void ProcessSample()
 
 		serialBit = bits[7];
 		
-		boolean data2Bool = (data2.GetValue() > 1.0);
+		boolean data1Bool = (data1.GetValue() > 1.0);
 		
-		if(data1Connected)
+		if(data2Connected)
 		{
-			bits[0] = data2Bool || (data1.GetValue() > 1.0);
+			bits[0] = data1Bool || (data2.GetValue() > 1.0);
 		}
 		else
 		{
 			boolean feedback = bits[7] != bits[0];
-			bits[0] = data2Bool || feedback;
+			bits[0] = data1Bool || feedback;
 		}
 		
 		if(strobeJack.GetValue() < 1.0)
@@ -799,7 +799,7 @@ private VoltageAudioJack clockInput;
 //[user-code-and-variables]    Add your own variables and functions here
 
 private NLCTrigger clockIn = new NLCTrigger();
-private boolean data1Connected = false;
+private boolean data2Connected = false;
 private boolean[] bits = new boolean[8];
 private boolean[] bitsOut = new boolean[8];
 private boolean serialBit = false;

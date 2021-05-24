@@ -71,6 +71,9 @@ This module is very similar to HetrickCV's Flip Pan. It pans two input signals b
 - Plug one signal in and monitor the opposite output to use this as a VCA.
 
 
+### 8-Bit Cipher
+This is a massive chunk of unpredictability, somewhat like a deluxe Turing Machine. [Original description from NLC.](https://www.nonlinearcircuits.com/modules/p/8bit-cipher)
+
 ### Future Additions
 - Divine CMOS
 - 1050 MixSeq

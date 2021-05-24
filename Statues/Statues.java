@@ -1,0 +1,637 @@
+package com.nlc.statues;
+
+
+import voltage.controllers.*;
+import voltage.core.*;
+import voltage.core.Jack.JackType;
+import voltage.sources.*;
+import voltage.utility.*;
+import voltage.processors.*;
+import voltage.effects.*;
+import java.awt.*;
+
+//[user-imports]   Add your own imports here
+//[/user-imports]
+
+
+public class Statues extends VoltageModule
+//[user-inheritance]
+//[/user-inheritance]
+{
+
+public Statues( long moduleID, VoltageObjects voltageObjects )
+{
+	super( moduleID, voltageObjects, "Statues", ModuleType.ModuleType_Switches, 1.6 );
+
+	InitializeControls();
+
+
+	canBeBypassed = false;
+	SetSkin( "6530fd627c934326835341fb6732f914" );
+}
+
+void InitializeControls()
+{
+
+	inJack = new VoltageAudioJack( "inJack", "Input", this, JackType.JackType_AudioInput );
+	AddComponent( inJack );
+	inJack.SetWantsMouseNotifications( false );
+	inJack.SetPosition( 45, 72 );
+	inJack.SetSize( 25, 25 );
+	inJack.SetSkin( "Jack Round 25px" );
+
+	xooJack = new VoltageAudioJack( "xoo", "XOO", this, JackType.JackType_AudioInput );
+	AddComponent( xooJack );
+	xooJack.SetWantsMouseNotifications( false );
+	xooJack.SetPosition( 12, 125 );
+	xooJack.SetSize( 25, 25 );
+	xooJack.SetSkin( "Jack Round 25px" );
+
+	oxoJack = new VoltageAudioJack( "oxo", "OXO", this, JackType.JackType_AudioInput );
+	AddComponent( oxoJack );
+	oxoJack.SetWantsMouseNotifications( false );
+	oxoJack.SetPosition( 44, 125 );
+	oxoJack.SetSize( 25, 25 );
+	oxoJack.SetSkin( "Jack Round 25px" );
+
+	ooxJack = new VoltageAudioJack( "oox", "OOX", this, JackType.JackType_AudioInput );
+	AddComponent( ooxJack );
+	ooxJack.SetWantsMouseNotifications( false );
+	ooxJack.SetPosition( 77, 125 );
+	ooxJack.SetSize( 25, 25 );
+	ooxJack.SetSkin( "Jack Round 25px" );
+
+	outJack1 = new VoltageAudioJack( "outJack1", "Out 1", this, JackType.JackType_AudioOutput );
+	AddComponent( outJack1 );
+	outJack1.SetWantsMouseNotifications( false );
+	outJack1.SetPosition( 5, 197 );
+	outJack1.SetSize( 25, 25 );
+	outJack1.SetSkin( "Jack Round 25px" );
+
+	outJack2 = new VoltageAudioJack( "outJack2", "Out 2", this, JackType.JackType_AudioOutput );
+	AddComponent( outJack2 );
+	outJack2.SetWantsMouseNotifications( false );
+	outJack2.SetPosition( 32, 197 );
+	outJack2.SetSize( 25, 25 );
+	outJack2.SetSkin( "Jack Round 25px" );
+
+	outJack3 = new VoltageAudioJack( "outJack3", "Out 3", this, JackType.JackType_AudioOutput );
+	AddComponent( outJack3 );
+	outJack3.SetWantsMouseNotifications( false );
+	outJack3.SetPosition( 59, 197 );
+	outJack3.SetSize( 25, 25 );
+	outJack3.SetSkin( "Jack Round 25px" );
+
+	outJack4 = new VoltageAudioJack( "outJack4", "Out 4", this, JackType.JackType_AudioOutput );
+	AddComponent( outJack4 );
+	outJack4.SetWantsMouseNotifications( false );
+	outJack4.SetPosition( 86, 197 );
+	outJack4.SetSize( 25, 25 );
+	outJack4.SetSkin( "Jack Round 25px" );
+
+	outJack5 = new VoltageAudioJack( "outJack5", "Out 5", this, JackType.JackType_AudioOutput );
+	AddComponent( outJack5 );
+	outJack5.SetWantsMouseNotifications( false );
+	outJack5.SetPosition( 5, 256 );
+	outJack5.SetSize( 25, 25 );
+	outJack5.SetSkin( "Jack Round 25px" );
+
+	outJack6 = new VoltageAudioJack( "outJack6", "Out 6", this, JackType.JackType_AudioOutput );
+	AddComponent( outJack6 );
+	outJack6.SetWantsMouseNotifications( false );
+	outJack6.SetPosition( 32, 256 );
+	outJack6.SetSize( 25, 25 );
+	outJack6.SetSkin( "Jack Round 25px" );
+
+	outJack7 = new VoltageAudioJack( "outJack7", "Out 7", this, JackType.JackType_AudioOutput );
+	AddComponent( outJack7 );
+	outJack7.SetWantsMouseNotifications( false );
+	outJack7.SetPosition( 59, 256 );
+	outJack7.SetSize( 25, 25 );
+	outJack7.SetSkin( "Jack Round 25px" );
+
+	outJack8 = new VoltageAudioJack( "outJack8", "Out 8", this, JackType.JackType_AudioOutput );
+	AddComponent( outJack8 );
+	outJack8.SetWantsMouseNotifications( false );
+	outJack8.SetPosition( 87, 256 );
+	outJack8.SetSize( 25, 25 );
+	outJack8.SetSkin( "Jack Round 25px" );
+
+	LED1 = new VoltageLED( "LED1", "LED1", this );
+	AddComponent( LED1 );
+	LED1.SetWantsMouseNotifications( false );
+	LED1.SetPosition( 12, 230 );
+	LED1.SetSize( 11, 11 );
+	LED1.SetSkin( "Silver Backed Blue" );
+
+	LED2 = new VoltageLED( "LED2", "LED2", this );
+	AddComponent( LED2 );
+	LED2.SetWantsMouseNotifications( false );
+	LED2.SetPosition( 38, 230 );
+	LED2.SetSize( 11, 11 );
+	LED2.SetSkin( "Silver Backed Blue" );
+
+	LED3 = new VoltageLED( "LED3", "LED3", this );
+	AddComponent( LED3 );
+	LED3.SetWantsMouseNotifications( false );
+	LED3.SetPosition( 66, 230 );
+	LED3.SetSize( 11, 11 );
+	LED3.SetSkin( "Silver Backed Blue" );
+
+	LED4 = new VoltageLED( "LED4", "LED4", this );
+	AddComponent( LED4 );
+	LED4.SetWantsMouseNotifications( false );
+	LED4.SetPosition( 93, 230 );
+	LED4.SetSize( 11, 11 );
+	LED4.SetSkin( "Silver Backed Blue" );
+
+	LED5 = new VoltageLED( "LED5", "LED5", this );
+	AddComponent( LED5 );
+	LED5.SetWantsMouseNotifications( false );
+	LED5.SetPosition( 12, 288 );
+	LED5.SetSize( 11, 11 );
+	LED5.SetSkin( "Silver Backed Blue" );
+
+	LED6 = new VoltageLED( "LED6", "LED6", this );
+	AddComponent( LED6 );
+	LED6.SetWantsMouseNotifications( false );
+	LED6.SetPosition( 39, 288 );
+	LED6.SetSize( 11, 11 );
+	LED6.SetSkin( "Silver Backed Blue" );
+
+	LED7 = new VoltageLED( "LED7", "LED7", this );
+	AddComponent( LED7 );
+	LED7.SetWantsMouseNotifications( false );
+	LED7.SetPosition( 66, 288 );
+	LED7.SetSize( 11, 11 );
+	LED7.SetSkin( "Silver Backed Blue" );
+
+	LED8 = new VoltageLED( "LED8", "LED8", this );
+	AddComponent( LED8 );
+	LED8.SetWantsMouseNotifications( false );
+	LED8.SetPosition( 94, 288 );
+	LED8.SetSize( 11, 11 );
+	LED8.SetSkin( "Silver Backed Blue" );
+}
+
+
+
+//-------------------------------------------------------------------------------
+//  public void Initialize()
+
+//  Initialize will get called shortly after your module's constructor runs. You can use it to
+//  do any initialization that the auto-generated code doesn't handle.
+//-------------------------------------------------------------------------------
+@Override
+public void Initialize()
+{
+	//[user-Initialize]   Add your own initialization code here
+	StartGuiUpdateTimer();
+   
+   for(int i = 0; i < 8; i++)
+   {
+      outs[i] = 0.0;
+   }
+
+
+	//[/user-Initialize]
+}
+
+
+//-------------------------------------------------------------------------------
+//  public void Destroy()
+
+//  Destroy will get called just before your module gets deleted. You can use it to perform any
+//  cleanup that's not handled automatically by Java.
+//-------------------------------------------------------------------------------
+@Override
+public void Destroy()
+{
+	super.Destroy();
+	//[user-Destroy]   Add your own module-getting-deleted code here
+
+
+
+	//[/user-Destroy]
+}
+
+
+//-------------------------------------------------------------------------------
+//  public boolean Notify( VoltageComponent component, ModuleNotifications notification, double doubleValue, long longValue, int x, int y, Object object )
+
+//  Notify will get called when various events occur - control values changing, timers firing, etc.
+//-------------------------------------------------------------------------------
+@Override
+public boolean Notify( VoltageComponent component, ModuleNotifications notification, double doubleValue, long longValue, int x, int y, Object object )
+{
+	//[user-Notify]   Add your own notification handling code between this line and the notify-close comment
+	switch( notification )
+	{
+		case Knob_Changed:   // doubleValue is the new VoltageKnob value
+		{
+		}
+		break;
+	
+		case Slider_Changed:   // doubleValue is the new slider value
+		{
+		}
+		break;
+	
+		case Button_Changed:   // doubleValue is the new button/toggle button value
+		{
+		}
+		break;
+	
+		case Switch_Changed:   // doubleValue is the new switch value
+		{
+		}
+		break;
+	
+		case Jack_Connected:   // longValue is the new cable ID
+		{
+		}
+		break;
+	
+		case Jack_Disconnected:   // All cables have been disconnected from this jack
+		{
+		}
+		break;
+	
+		case GUI_Update_Timer:   // Called every 50ms (by default) if turned on
+		{
+			LED1.SetValue(outs[0] * 0.2);
+			LED2.SetValue(outs[1] * 0.2);
+			LED3.SetValue(outs[2] * 0.2);
+			LED4.SetValue(outs[3] * 0.2);
+			LED5.SetValue(outs[4] * 0.2);
+			LED6.SetValue(outs[5] * 0.2);
+			LED7.SetValue(outs[6] * 0.2);
+			LED8.SetValue(outs[7] * 0.2);
+		}
+		break;
+	
+		case Object_MouseMove:   // called when mouse is over an object that receives mouse notifications. 'object' parameter is a VoltageMouseKeyFlags object.
+		{
+		}
+		break;
+	
+		case Object_MouseLeave:  // called when mouse leaves an object that receives mouse notifications. 'object' parameter is a VoltageMouseKeyFlags object.
+		{
+		}
+		break;
+	
+		case Object_LeftButtonDown:   // called when user left-clicks on an object that receives mouse notifications. 'object' parameter is a VoltageMouseKeyFlags object.
+		{
+		}
+		break;
+	
+		case Object_LeftButtonUp:   // called when user releases left mouse button on an object that receives mouse notifications. 'object' parameter is a VoltageMouseKeyFlags object.
+		{
+		}
+		break;
+	
+		case Object_RightButtonDown:   // called when user releases right mouse button on an object that receives mouse notifications. 'object' parameter is a VoltageMouseKeyFlags object.
+		{
+		}
+		break;
+	
+		case Object_RightButtonUp:   // called when user right-clicks on an object that receives mouse notifications
+		{
+		}
+		break;
+	
+		case Object_LeftButtonDoubleClick: // called when user left-button double-clicks on an object that receives mouse notifications
+		{
+		}
+		break;
+	
+		// Less common notifications:
+	
+		case Named_Timer:   // object contains a String with the name of the timer that has fired
+		{
+		}
+		break;
+	
+		case Canvas_Painting:   // About to paint canvas.  object is a java.awt.Rectangle with painting boundaries
+		{
+		}
+		break;
+	
+		case Canvas_Painted:   // Canvas painting is complete
+		{
+		}
+		break;
+	
+		case Control_DragStart:    // A user has started dragging on a control that has been marked as draggable
+		{
+		}
+		break;
+	
+		case Control_DragOn:       // This control has been dragged over during a drag operation. object contains the dragged object
+		{
+		}
+		break;
+	
+		case Control_DragOff:      // This control has been dragged over during a drag operation. object contains the dragged object
+		{
+		}
+		break;
+	
+		case Control_DragEnd:      // A user has ended their drag on a control that has been marked as draggable
+		{
+		}
+		break;
+	
+		case Label_Changed:        // The text of an editable text control has changed
+		{
+		}
+		break;
+	
+		case SoundPlayback_Start:   // A sound has begun playback
+		{
+		}
+		break;
+	
+		case SoundPlayback_End:     // A sound has ended playback
+		{
+		}
+		break;
+	
+		case Scrollbar_Position:    // longValue is the new scrollbar position
+		{
+		}
+		break;
+	
+		case PolyVoices_Changed:    // longValue is the new number of poly voices
+		{
+		}
+		break;
+	
+		case File_Dropped:     // 'object' is a String containing the file path
+		{
+		}
+		break;
+	
+		case Preset_Loading_Start:   // called when preset loading begins
+		{
+		}
+		break;
+	
+		case Preset_Loading_Finish:  // called when preset loading finishes
+		{
+		}
+		break;
+	
+		case Variation_Loading_Start:    // sent when a variation is about to load
+		{
+		}
+		break;
+	
+		case Variation_Loading_Finish:   // sent when a variation has just finished loading
+		{
+		}
+		break;
+	
+		case Tempo_Changed:     // doubleValue is the new tempo
+		{
+		}
+		break;
+	
+		case Randomized:     // called when the module's controls get randomized
+		{
+		}
+		break;
+	
+		case VariationListChanged:   // sent when a variation gets added, deleted, or renamed, or the variations list gets reordered
+		{
+		}
+		break;
+	
+		case Key_Press:     // sent when module has keyboard focus and a key is pressed; object is a VoltageKeyPressInfo object
+		{
+		}
+		break;
+	
+		case Reset:    // sent when the module has been reset to default settings
+		{
+		}
+		break;
+	
+		case Keyboard_NoteOn:   // sent when a note has been pressed on a VoltageKeyboard object. longValue is the note value ( 0-127 )
+		{
+		}
+		break;
+	
+		case Keyboard_NoteOff:   // sent when a note has been released on a VoltageKeyboard object. longValue is the note value ( 0-127 )
+		{
+		}
+		break;
+	
+		case Curve_Changed:   // sent when user has edited a curve's value. 'object' will be a VoltageCurve.CurveChangeNotification object.
+		{
+		}
+		break;
+	}
+
+
+
+	return false;
+	//[/user-Notify]
+}
+
+
+//-------------------------------------------------------------------------------
+//  public void ProcessSample()
+
+//  ProcessSample is called once per sample. Usually it's where you read
+//  from input jacks, process audio, and write it to your output jacks.
+//  Since ProcesssSample gets called 48,000 times per second, offload CPU-intensive operations
+//  to other threads when possible and avoid calling native functions.
+//-------------------------------------------------------------------------------
+@Override
+public void ProcessSample()
+{
+	//[user-ProcessSample]   Add your own process-sampling code here
+	double input = inJack.GetValue();
+	
+	int activeOutput = 0;
+	
+	if(ooxJack.GetValue() > 1.0) activeOutput = activeOutput + 1;
+	if(oxoJack.GetValue() > 1.0) activeOutput = activeOutput + 2;
+	if(xooJack.GetValue() > 1.0) activeOutput = activeOutput + 4;
+
+	outs[activeOutput] = input;
+
+	outJack1.SetValue(outs[0]);
+	outJack2.SetValue(outs[1]);
+	outJack3.SetValue(outs[2]);
+	outJack4.SetValue(outs[3]);
+	outJack5.SetValue(outs[4]);
+	outJack6.SetValue(outs[5]);
+	outJack7.SetValue(outs[6]);
+	outJack8.SetValue(outs[7]);
+	//[/user-ProcessSample]
+}
+
+
+//-------------------------------------------------------------------------------
+//  public String GetTooltipText( VoltageComponent component )
+
+//  Gets called when a tooltip is about to display for a control. Override it if
+//  you want to change what the tooltip displays - if you want a knob to work in logarithmic fashion,
+//  for instance, you can translate the knob's current value to a log-based string and display it here.
+//-------------------------------------------------------------------------------
+@Override
+public String GetTooltipText( VoltageComponent component )
+{
+	//[user-GetTooltipText]   Add your own code here
+
+
+
+	return super.GetTooltipText( component );
+	//[/user-GetTooltipText]
+}
+
+
+//-------------------------------------------------------------------------------
+//  public void EditComponentValue( VoltageComponent component, double newValue, String newText )
+
+//  Gets called after a user clicks on a tooltip and types in a new value for a control. Override this if
+//  you've changed the default tooltip display (translating a linear value to logarithmic, for instance)
+//  in GetTooltipText().
+//-------------------------------------------------------------------------------
+@Override
+public void EditComponentValue( VoltageComponent component, double newValue, String newText )
+{
+	//[user-EditComponentValue]   Add your own code here
+
+
+
+	//[/user-EditComponentValue]
+	super.EditComponentValue( component, newValue, newText );
+}
+
+
+//-------------------------------------------------------------------------------
+//  public void OnUndoRedo( String undoType, double newValue, Object optionalObject )
+
+//  If you've created custom undo events via calls to CreateUndoEvent, you'll need to
+//  process them in this function when they get triggered by undo/redo actions.
+//-------------------------------------------------------------------------------
+@Override
+public void OnUndoRedo( String undoType, double newValue, Object optionalObject )
+{
+	//[user-OnUndoRedo]   Add your own code here
+
+
+
+	//[/user-OnUndoRedo]
+}
+
+
+//-------------------------------------------------------------------------------
+//  public byte[] GetStateInformation()
+
+//  Gets called when the module's state gets saved, typically when the user saves a preset with
+//  this module in it. Voltage Modular will automatically save the states of knobs, sliders, etc.,
+//  but if you have any custom state information you need to save, return it from this function.
+//-------------------------------------------------------------------------------
+@Override
+public byte[] GetStateInformation()
+{
+	//[user-GetStateInformation]   Add your own code here
+
+
+
+	return null;
+	//[/user-GetStateInformation]
+}
+
+
+//-------------------------------------------------------------------------------
+//  public void SetStateInformation(byte[] stateInfo)
+
+//  Gets called when this module's state is getting restored, typically when a user opens a preset with
+//  this module in it. The stateInfo parameter will contain whatever custom data you stored in GetStateInformation().
+//-------------------------------------------------------------------------------
+@Override
+public void SetStateInformation(byte[] stateInfo)
+{
+	//[user-SetStateInformation]   Add your own code here
+
+
+
+	//[/user-SetStateInformation]
+}
+
+
+//-------------------------------------------------------------------------------
+//  public byte[] GetStateInformationForVariations()
+
+//  Gets called when a user saves a variation with this module in it.
+//  Voltage Modular will automatically save the states of knobs, sliders, etc.,
+//  but if you have any custom state information you need to save, return it from this function.
+//-------------------------------------------------------------------------------
+@Override
+public byte[] GetStateInformationForVariations()
+{
+	//[user-GetStateInformationForVariations]   Add your own code here
+
+
+
+	return GetStateInformation();
+	//[/user-GetStateInformationForVariations]
+}
+
+
+//-------------------------------------------------------------------------------
+//  public void SetStateInformationForVariations(byte[] stateInfo)
+
+//  Gets called when a user loads a variation with this module in it.
+//  The stateInfo parameter will contain whatever custom data you stored in GetStateInformationForVariations().
+//-------------------------------------------------------------------------------
+@Override
+public void SetStateInformationForVariations(byte[] stateInfo)
+{
+	//[user-SetStateInformationForVariations]   Add your own code here
+	SetStateInformation(stateInfo);
+
+
+
+	//[/user-SetStateInformationForVariations]
+}
+
+
+// Auto-generated variables
+private VoltageLED LED8;
+private VoltageLED LED7;
+private VoltageLED LED6;
+private VoltageLED LED5;
+private VoltageLED LED4;
+private VoltageLED LED3;
+private VoltageLED LED2;
+private VoltageLED LED1;
+private VoltageAudioJack outJack8;
+private VoltageAudioJack outJack7;
+private VoltageAudioJack outJack6;
+private VoltageAudioJack outJack5;
+private VoltageAudioJack outJack4;
+private VoltageAudioJack outJack3;
+private VoltageAudioJack outJack2;
+private VoltageAudioJack outJack1;
+private VoltageAudioJack ooxJack;
+private VoltageAudioJack oxoJack;
+private VoltageAudioJack xooJack;
+private VoltageAudioJack inJack;
+
+
+//[user-code-and-variables]    Add your own variables and functions here
+
+private double[] outs = new double[8];
+
+
+
+//[/user-code-and-variables]
+}
+
+ 

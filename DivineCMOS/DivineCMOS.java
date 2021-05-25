@@ -11,6 +11,41 @@ import voltage.effects.*;
 import java.awt.*;
 
 //[user-imports]   Add your own imports here
+class NLCTrigger 
+{
+	boolean state = true;
+
+	void reset() 
+	{
+		state = true;
+	}
+
+	boolean process(double in) {
+		if (state) {
+			// HIGH to LOW
+			if (in < 1.0) 
+			{
+				state = false;
+			}
+		}
+		else {
+			// LOW to HIGH
+			if (in >= 1.0) 
+			{
+				state = true;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	boolean isHigh() 
+	{
+		return state;
+	}
+};
+
+
 //[/user-imports]
 
 
@@ -27,71 +62,72 @@ public DivineCMOS( long moduleID, VoltageObjects voltageObjects )
 
 
 	canBeBypassed = false;
-	SetSkin( "8385d28bae1445cdb18c2e8ba9318ce7" );
+	SetSkin( "057ba53c2f0b40c08adf0d86ef98d694" );
 }
 
 void InitializeControls()
 {
 
-	div2Gain = new VoltageKnob( "div2Gain", "/2 Gain", this, 0.0, 1.0, 0.5 );
+	div2Gain = new VoltageKnob( "div2Gain", "/2 Gain", this, 0.0, 5.0, 5.0 );
 	AddComponent( div2Gain );
 	div2Gain.SetWantsMouseNotifications( false );
 	div2Gain.SetPosition( 14, 48 );
 	div2Gain.SetSize( 35, 35 );
 	div2Gain.SetSkin( "Knurled Plastic White" );
-	div2Gain.SetRange( 0.0, 1.0, 0.5, false, 0 );
+	div2Gain.SetRange( 0.0, 5.0, 5.0, false, 0 );
 	div2Gain.SetKnobParams( 215, 145 );
 	div2Gain.DisplayValueInPercent( true );
 	div2Gain.SetKnobAdjustsRing( true );
 
-	div4Gain = new VoltageKnob( "div4Gain", "/4 Gain", this, 0.0, 1.0, 0.5 );
+	div4Gain = new VoltageKnob( "div4Gain", "/4 Gain", this, 0.0, 5.0, 0.0 );
 	AddComponent( div4Gain );
 	div4Gain.SetWantsMouseNotifications( false );
 	div4Gain.SetPosition( 14, 99 );
 	div4Gain.SetSize( 35, 35 );
 	div4Gain.SetSkin( "Knurled Plastic White" );
-	div4Gain.SetRange( 0.0, 1.0, 0.5, false, 0 );
+	div4Gain.SetRange( 0.0, 5.0, 0.0, false, 0 );
 	div4Gain.SetKnobParams( 215, 145 );
 	div4Gain.DisplayValueInPercent( true );
 	div4Gain.SetKnobAdjustsRing( true );
 
-	div8Gain = new VoltageKnob( "div8Gain", "/8 Gain", this, 0.0, 1.0, 0.5 );
+	div8Gain = new VoltageKnob( "div8Gain", "/8 Gain", this, 0.0, 5.0, 0.0 );
 	AddComponent( div8Gain );
 	div8Gain.SetWantsMouseNotifications( false );
-	div8Gain.SetPosition( 67, 70 );
+	div8Gain.SetPosition( 67, 69 );
 	div8Gain.SetSize( 35, 35 );
 	div8Gain.SetSkin( "Knurled Plastic White" );
-	div8Gain.SetRange( 0.0, 1.0, 0.5, false, 0 );
+	div8Gain.SetRange( 0.0, 5.0, 0.0, false, 0 );
 	div8Gain.SetKnobParams( 215, 145 );
 	div8Gain.DisplayValueInPercent( true );
 	div8Gain.SetKnobAdjustsRing( true );
 
-	div16Gain = new VoltageKnob( "div16Gain", "/16 Gain", this, 0.0, 1.0, 0.5 );
+	div16Gain = new VoltageKnob( "div16Gain", "/16 Gain", this, 0.0, 5.0, 0.0 );
 	AddComponent( div16Gain );
 	div16Gain.SetWantsMouseNotifications( false );
 	div16Gain.SetPosition( 67, 120 );
 	div16Gain.SetSize( 35, 35 );
 	div16Gain.SetSkin( "Knurled Plastic White" );
-	div16Gain.SetRange( 0.0, 1.0, 0.5, false, 0 );
+	div16Gain.SetRange( 0.0, 5.0, 0.0, false, 0 );
 	div16Gain.SetKnobParams( 215, 145 );
 	div16Gain.DisplayValueInPercent( true );
 	div16Gain.SetKnobAdjustsRing( true );
 
-	slewKnob = new VoltageKnob( "slewKnob", "Slew", this, 0.0, 1.0, 0.5 );
+	slewKnob = new VoltageKnob( "slewKnob", "Slew", this, 0.0, 1.0, 0.0 );
 	AddComponent( slewKnob );
 	slewKnob.SetWantsMouseNotifications( false );
 	slewKnob.SetPosition( 14, 164 );
 	slewKnob.SetSize( 35, 35 );
 	slewKnob.SetSkin( "Knurled Plastic White" );
-	slewKnob.SetRange( 0.0, 1.0, 0.5, false, 0 );
+	slewKnob.SetRange( 0.0, 1.0, 0.0, false, 0 );
 	slewKnob.SetKnobParams( 215, 145 );
 	slewKnob.DisplayValueInPercent( true );
 	slewKnob.SetKnobAdjustsRing( true );
+	slewKnob.SetRangeSkewValue( 0.25, false );
 
 	LED1 = new VoltageLED( "LED1", "LED1", this );
 	AddComponent( LED1 );
 	LED1.SetWantsMouseNotifications( false );
-	LED1.SetPosition( 80, 176 );
+	LED1.SetPosition( 10, 319 );
 	LED1.SetSize( 11, 11 );
 	LED1.SetSkin( "Silver Backed Blue" );
 
@@ -150,6 +186,34 @@ void InitializeControls()
 	div16Out.SetPosition( 88, 288 );
 	div16Out.SetSize( 25, 25 );
 	div16Out.SetSkin( "Jack Round 25px" );
+
+	LED2 = new VoltageLED( "LED2", "LED2", this );
+	AddComponent( LED2 );
+	LED2.SetWantsMouseNotifications( false );
+	LED2.SetPosition( 39, 319 );
+	LED2.SetSize( 11, 11 );
+	LED2.SetSkin( "Silver Backed Blue" );
+
+	LED3 = new VoltageLED( "LED3", "LED3", this );
+	AddComponent( LED3 );
+	LED3.SetWantsMouseNotifications( false );
+	LED3.SetPosition( 67, 319 );
+	LED3.SetSize( 11, 11 );
+	LED3.SetSkin( "Silver Backed Blue" );
+
+	LED4 = new VoltageLED( "LED4", "LED4", this );
+	AddComponent( LED4 );
+	LED4.SetWantsMouseNotifications( false );
+	LED4.SetPosition( 95, 319 );
+	LED4.SetSize( 11, 11 );
+	LED4.SetSkin( "Silver Backed Blue" );
+
+	LED5 = new VoltageLED( "LED5", "LED5", this );
+	AddComponent( LED5 );
+	LED5.SetWantsMouseNotifications( false );
+	LED5.SetPosition( 80, 174 );
+	LED5.SetSize( 11, 11 );
+	LED5.SetSkin( "Silver Backed Blue" );
 }
 
 
@@ -164,7 +228,7 @@ void InitializeControls()
 public void Initialize()
 {
 	//[user-Initialize]   Add your own initialization code here
-
+	StartGuiUpdateTimer();
 
 
 	//[/user-Initialize]
@@ -202,6 +266,16 @@ public boolean Notify( VoltageComponent component, ModuleNotifications notificat
 	{
 		case Knob_Changed:   // doubleValue is the new VoltageKnob value
 		{
+			if(component == div2Gain) div2GainVal.SetValue(doubleValue);
+			else if(component == div4Gain) div4GainVal.SetValue(doubleValue);
+			else if(component == div8Gain) div8GainVal.SetValue(doubleValue);
+			else if(component == div16Gain) div16GainVal.SetValue(doubleValue);
+			else if(component == slewKnob)
+			{
+				double slewTime = doubleValue * 2000.0;
+				slewLimiter.SetAttackTime(slewTime);
+				slewLimiter.SetReleaseTime(slewTime);
+			}
 		}
 		break;
 	
@@ -232,6 +306,12 @@ public boolean Notify( VoltageComponent component, ModuleNotifications notificat
 	
 		case GUI_Update_Timer:   // Called every 50ms (by default) if turned on
 		{
+			LED1.SetValue(div2Active ? 1.0 : 0.0);
+			LED2.SetValue(div4Active ? 1.0 : 0.0);
+			LED3.SetValue(div8Active ? 1.0 : 0.0);
+			LED4.SetValue(div16Active ? 1.0 : 0.0);
+			
+			LED5.SetValue(currentOut * 0.2);
 		}
 		break;
 	
@@ -417,9 +497,82 @@ public boolean Notify( VoltageComponent component, ModuleNotifications notificat
 public void ProcessSample()
 {
 	//[user-ProcessSample]   Add your own process-sampling code here
+	if(clockIn1.process(in1.GetValue()))
+	{
 
+		if(stepCount1 == 16) stepCount1 = 1;
+		else stepCount1++;
 
+		if (stepCount1 % 2 == 0)
+		{
+			in1div2 = !in1div2;
 
+			if (stepCount1 % 4 == 0)
+			{
+				in1div4 = ! in1div4;
+
+				if (stepCount1 % 8 == 0)
+				{
+					 	in1div8 = !in1div8;
+
+						if (stepCount1 % 16 == 0)
+						{
+							in1div16 = ! in1div16;
+						}
+				}
+			}
+		}
+	}
+
+	if(clockIn2.process(in2.GetValue()))
+	{
+
+		if(stepCount2 == 16) stepCount2 = 1;
+		else stepCount2++;
+
+		if (stepCount2 % 2 == 0)
+		{
+			in2div2 = !in2div2;
+
+			if (stepCount2 % 4 == 0)
+			{
+				in2div4 = ! in2div4;
+
+				if (stepCount2 % 8 == 0)
+				{
+					 	in2div8 = !in2div8;
+
+						if (stepCount2 % 16 == 0)
+						{
+							in2div16 = ! in2div16;
+						}
+				}
+			}
+		}
+	}
+	
+	div2Active = (in1div2 != in2div2);
+	div4Active = (in1div4 != in2div4);
+	div8Active = (in1div8 != in2div8);
+	div16Active = (in1div16 != in2div16);
+	
+	div2Out.SetValue(div2Active ? 5.0 : 0.0);
+	div4Out.SetValue(div4Active ? 5.0 : 0.0);
+	div8Out.SetValue(div8Active ? 5.0 : 0.0);
+	div16Out.SetValue(div16Active ? 5.0 : 0.0);
+	
+	double div2mix = (div2Active ? div2GainVal.GetSmoothValue() : 0.0);
+	double div4mix = (div4Active ? div4GainVal.GetSmoothValue() : 0.0);
+	double div8mix = (div8Active ? div8GainVal.GetSmoothValue() : 0.0);
+	double div16mix = (div16Active ? div16GainVal.GetSmoothValue() : 0.0);
+	
+	currentOut = div2mix + div4mix + div8mix + div16mix;
+	if(currentOut > 5.0) currentOut = 5.0;
+	
+	double slewedOut = slewLimiter.ProcessSample(currentOut);
+	
+	mainOut.SetValue(currentOut);
+	slewOut.SetValue(slewedOut);
 	//[/user-ProcessSample]
 }
 
@@ -553,6 +706,10 @@ public void SetStateInformationForVariations(byte[] stateInfo)
 
 
 // Auto-generated variables
+private VoltageLED LED5;
+private VoltageLED LED4;
+private VoltageLED LED3;
+private VoltageLED LED2;
 private VoltageAudioJack div16Out;
 private VoltageAudioJack div8Out;
 private VoltageAudioJack div4Out;
@@ -570,12 +727,24 @@ private VoltageKnob div2Gain;
 
 
 //[user-code-and-variables]    Add your own variables and functions here
+
+int stepCount1 = 0;
+int stepCount2 = 0;
+boolean in1div2, in1div4, in1div8, in1div16;
+boolean in2div2, in2div4, in2div8, in2div16;
+boolean div2Active, div4Active, div8Active, div16Active;
+double currentOut = 0.0;
+
+EnvelopeFollower slewLimiter = new EnvelopeFollower(0.0, 0.0, 0.0);
+
+private SmoothValue div2GainVal = new SmoothValue();
+private SmoothValue div4GainVal = new SmoothValue();
+private SmoothValue div8GainVal = new SmoothValue();
+private SmoothValue div16GainVal = new SmoothValue();
+
+private NLCTrigger clockIn1 = new NLCTrigger();
+private NLCTrigger clockIn2 = new NLCTrigger();
 //[/user-code-and-variables]
-
-
-
-
-
 }
 
  

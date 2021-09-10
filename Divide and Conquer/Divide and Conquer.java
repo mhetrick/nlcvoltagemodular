@@ -11,6 +11,76 @@ import voltage.effects.*;
 import java.awt.*;
 
 //[user-imports]   Add your own imports here
+
+class NLCTrigger 
+{
+	boolean state = true;
+
+	void reset() 
+	{
+		state = true;
+	}
+
+	boolean process(double in) {
+		if (state) {
+			// HIGH to LOW
+			if (in < 1.0) 
+			{
+				state = false;
+			}
+		}
+		else {
+			// LOW to HIGH
+			if (in >= 1.0) 
+			{
+				state = true;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	boolean isHigh() 
+	{
+		return state;
+	}
+};
+
+class NLCTriggerDouble
+{
+	boolean state = true;
+
+	void reset() 
+	{
+		state = true;
+	}
+
+	boolean process(double in) {
+		if (state) {
+			// HIGH to LOW
+			if (in < 1.0) 
+			{
+				state = false;
+				return true;
+			}
+		}
+		else {
+			// LOW to HIGH
+			if (in >= 1.0) 
+			{
+				state = true;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	boolean isHigh() 
+	{
+		return state;
+	}
+};
+
 //[/user-imports]
 
 
@@ -23,11 +93,242 @@ public DivConquer( long moduleID, VoltageObjects voltageObjects )
 {
 	super( moduleID, voltageObjects, "Divide and Conquer", ModuleType.ModuleType_Logic, 1.6 );
 
+	InitializeControls();
 
 
 	canBeBypassed = false;
-	SetSkin( "86fa2ef0dfec4f5588c8094ac1fe23c1" );
+	SetSkin( "a9d4e01f323c4c56a7def81dc69f5c2f" );
 }
+
+void InitializeControls()
+{
+
+	inMain = new VoltageAudioJack( "inMain", "In Main", this, JackType.JackType_AudioInput );
+	AddComponent( inMain );
+	inMain.SetWantsMouseNotifications( false );
+	inMain.SetPosition( 13, 216 );
+	inMain.SetSize( 25, 25 );
+	inMain.SetSkin( "Jack Round 25px" );
+
+	in3 = new VoltageAudioJack( "in3", "In 3", this, JackType.JackType_AudioInput );
+	AddComponent( in3 );
+	in3.SetWantsMouseNotifications( false );
+	in3.SetPosition( 13, 64 );
+	in3.SetSize( 25, 25 );
+	in3.SetSkin( "Jack Round 25px" );
+
+	in5 = new VoltageAudioJack( "in5", "In 5", this, JackType.JackType_AudioInput );
+	AddComponent( in5 );
+	in5.SetWantsMouseNotifications( false );
+	in5.SetPosition( 13, 111 );
+	in5.SetSize( 25, 25 );
+	in5.SetSkin( "Jack Round 25px" );
+
+	in7 = new VoltageAudioJack( "in7", "In 7", this, JackType.JackType_AudioInput );
+	AddComponent( in7 );
+	in7.SetWantsMouseNotifications( false );
+	in7.SetPosition( 13, 156 );
+	in7.SetSize( 25, 25 );
+	in7.SetSkin( "Jack Round 25px" );
+
+	out2 = new VoltageAudioJack( "out2", "Out 2", this, JackType.JackType_AudioOutput );
+	AddComponent( out2 );
+	out2.SetWantsMouseNotifications( false );
+	out2.SetPosition( 46, 216 );
+	out2.SetSize( 25, 25 );
+	out2.SetSkin( "Jack Round 25px" );
+
+	out3 = new VoltageAudioJack( "out3", "Out 3", this, JackType.JackType_AudioOutput );
+	AddComponent( out3 );
+	out3.SetWantsMouseNotifications( false );
+	out3.SetPosition( 78, 64 );
+	out3.SetSize( 25, 25 );
+	out3.SetSkin( "Jack Round 25px" );
+
+	out4 = new VoltageAudioJack( "out4", "Out 4", this, JackType.JackType_AudioOutput );
+	AddComponent( out4 );
+	out4.SetWantsMouseNotifications( false );
+	out4.SetPosition( 78, 216 );
+	out4.SetSize( 25, 25 );
+	out4.SetSkin( "Jack Round 25px" );
+
+	out5 = new VoltageAudioJack( "out5", "Out 5", this, JackType.JackType_AudioOutput );
+	AddComponent( out5 );
+	out5.SetWantsMouseNotifications( false );
+	out5.SetPosition( 78, 110 );
+	out5.SetSize( 25, 25 );
+	out5.SetSkin( "Jack Round 25px" );
+
+	out7 = new VoltageAudioJack( "out7", "Out 7", this, JackType.JackType_AudioOutput );
+	AddComponent( out7 );
+	out7.SetWantsMouseNotifications( false );
+	out7.SetPosition( 78, 156 );
+	out7.SetSize( 25, 25 );
+	out7.SetSkin( "Jack Round 25px" );
+
+	out8 = new VoltageAudioJack( "out8", "Out 8", this, JackType.JackType_AudioOutput );
+	AddComponent( out8 );
+	out8.SetWantsMouseNotifications( false );
+	out8.SetPosition( 13, 259 );
+	out8.SetSize( 25, 25 );
+	out8.SetSkin( "Jack Round 25px" );
+
+	out16 = new VoltageAudioJack( "out16", "Out 16", this, JackType.JackType_AudioOutput );
+	AddComponent( out16 );
+	out16.SetWantsMouseNotifications( false );
+	out16.SetPosition( 46, 259 );
+	out16.SetSize( 25, 25 );
+	out16.SetSkin( "Jack Round 25px" );
+
+	out32 = new VoltageAudioJack( "out32", "Out 32", this, JackType.JackType_AudioOutput );
+	AddComponent( out32 );
+	out32.SetWantsMouseNotifications( false );
+	out32.SetPosition( 79, 259 );
+	out32.SetSize( 25, 25 );
+	out32.SetSkin( "Jack Round 25px" );
+
+	out64 = new VoltageAudioJack( "out64", "Out 64", this, JackType.JackType_AudioOutput );
+	AddComponent( out64 );
+	out64.SetWantsMouseNotifications( false );
+	out64.SetPosition( 14, 301 );
+	out64.SetSize( 25, 25 );
+	out64.SetSkin( "Jack Round 25px" );
+
+	out128 = new VoltageAudioJack( "out128", "Out 128", this, JackType.JackType_AudioOutput );
+	AddComponent( out128 );
+	out128.SetWantsMouseNotifications( false );
+	out128.SetPosition( 46, 301 );
+	out128.SetSize( 25, 25 );
+	out128.SetSkin( "Jack Round 25px" );
+
+	out256 = new VoltageAudioJack( "out256", "Out 256", this, JackType.JackType_AudioOutput );
+	AddComponent( out256 );
+	out256.SetWantsMouseNotifications( false );
+	out256.SetPosition( 79, 300 );
+	out256.SetSize( 25, 25 );
+	out256.SetSkin( "Jack Round 25px" );
+
+	out3Div2 = new VoltageAudioJack( "out3Div2", "Out 3 Div 2", this, JackType.JackType_AudioOutput );
+	AddComponent( out3Div2 );
+	out3Div2.SetWantsMouseNotifications( false );
+	out3Div2.SetPosition( 46, 65 );
+	out3Div2.SetSize( 25, 25 );
+	out3Div2.SetSkin( "Jack Round 25px" );
+
+	out5Div2 = new VoltageAudioJack( "out5Div2", "Out 5 Div 2", this, JackType.JackType_AudioOutput );
+	AddComponent( out5Div2 );
+	out5Div2.SetWantsMouseNotifications( false );
+	out5Div2.SetPosition( 46, 111 );
+	out5Div2.SetSize( 25, 25 );
+	out5Div2.SetSkin( "Jack Round 25px" );
+
+	out7Div2 = new VoltageAudioJack( "out7Div2", "Out 7 Div 2", this, JackType.JackType_AudioOutput );
+	AddComponent( out7Div2 );
+	out7Div2.SetWantsMouseNotifications( false );
+	out7Div2.SetPosition( 46, 156 );
+	out7Div2.SetSize( 25, 25 );
+	out7Div2.SetSkin( "Jack Round 25px" );
+
+	led2 = new VoltageLED( "led2", "LED 2", this );
+	AddComponent( led2 );
+	led2.SetWantsMouseNotifications( false );
+	led2.SetPosition( 71, 213 );
+	led2.SetSize( 8, 8 );
+	led2.SetSkin( "Silver Backed Blue" );
+
+	led3 = new VoltageLED( "led3", "LED 3", this );
+	AddComponent( led3 );
+	led3.SetWantsMouseNotifications( false );
+	led3.SetPosition( 71, 84 );
+	led3.SetSize( 8, 8 );
+	led3.SetSkin( "Silver Backed Blue" );
+
+	led4 = new VoltageLED( "led4", "LED 4", this );
+	AddComponent( led4 );
+	led4.SetWantsMouseNotifications( false );
+	led4.SetPosition( 71, 236 );
+	led4.SetSize( 8, 8 );
+	led4.SetSkin( "Silver Backed Blue" );
+
+	led5 = new VoltageLED( "led5", "LED 5", this );
+	AddComponent( led5 );
+	led5.SetWantsMouseNotifications( false );
+	led5.SetPosition( 71, 130 );
+	led5.SetSize( 8, 8 );
+	led5.SetSkin( "Silver Backed Blue" );
+
+	led7 = new VoltageLED( "led7", "LED 7", this );
+	AddComponent( led7 );
+	led7.SetWantsMouseNotifications( false );
+	led7.SetPosition( 71, 176 );
+	led7.SetSize( 8, 8 );
+	led7.SetSkin( "Silver Backed Blue" );
+
+	led8 = new VoltageLED( "led8", "LED 8", this );
+	AddComponent( led8 );
+	led8.SetWantsMouseNotifications( false );
+	led8.SetPosition( 38, 277 );
+	led8.SetSize( 8, 8 );
+	led8.SetSkin( "Silver Backed Blue" );
+
+	led16 = new VoltageLED( "led16", "LED 16", this );
+	AddComponent( led16 );
+	led16.SetWantsMouseNotifications( false );
+	led16.SetPosition( 71, 255 );
+	led16.SetSize( 8, 8 );
+	led16.SetSkin( "Silver Backed Blue" );
+
+	led32 = new VoltageLED( "led32", "LED 32", this );
+	AddComponent( led32 );
+	led32.SetWantsMouseNotifications( false );
+	led32.SetPosition( 71, 278 );
+	led32.SetSize( 8, 8 );
+	led32.SetSkin( "Silver Backed Blue" );
+
+	led64 = new VoltageLED( "led64", "LED 64", this );
+	AddComponent( led64 );
+	led64.SetWantsMouseNotifications( false );
+	led64.SetPosition( 38, 320 );
+	led64.SetSize( 8, 8 );
+	led64.SetSkin( "Silver Backed Blue" );
+
+	led128 = new VoltageLED( "led128", "LED 128", this );
+	AddComponent( led128 );
+	led128.SetWantsMouseNotifications( false );
+	led128.SetPosition( 71, 298 );
+	led128.SetSize( 8, 8 );
+	led128.SetSkin( "Silver Backed Blue" );
+
+	led256 = new VoltageLED( "led256", "LED 256", this );
+	AddComponent( led256 );
+	led256.SetWantsMouseNotifications( false );
+	led256.SetPosition( 71, 320 );
+	led256.SetSize( 8, 8 );
+	led256.SetSkin( "Silver Backed Blue" );
+
+	led3Div2 = new VoltageLED( "led3Div2", "LED 3 Div 2", this );
+	AddComponent( led3Div2 );
+	led3Div2.SetWantsMouseNotifications( false );
+	led3Div2.SetPosition( 71, 62 );
+	led3Div2.SetSize( 8, 8 );
+	led3Div2.SetSkin( "Silver Backed Blue" );
+
+	led5Div2 = new VoltageLED( "led5Div2", "LED 5 Div 2", this );
+	AddComponent( led5Div2 );
+	led5Div2.SetWantsMouseNotifications( false );
+	led5Div2.SetPosition( 71, 108 );
+	led5Div2.SetSize( 8, 8 );
+	led5Div2.SetSkin( "Silver Backed Blue" );
+
+	led7Div2 = new VoltageLED( "led7Div2", "LED 7 Div 2", this );
+	AddComponent( led7Div2 );
+	led7Div2.SetWantsMouseNotifications( false );
+	led7Div2.SetPosition( 71, 154 );
+	led7Div2.SetSize( 8, 8 );
+	led7Div2.SetSkin( "Silver Backed Blue" );
+}
+
+
 
 //-------------------------------------------------------------------------------
 //  public void Initialize()
@@ -39,7 +340,7 @@ public DivConquer( long moduleID, VoltageObjects voltageObjects )
 public void Initialize()
 {
 	//[user-Initialize]   Add your own initialization code here
-
+	StartGuiUpdateTimer();
 
 
 	//[/user-Initialize]
@@ -97,16 +398,39 @@ public boolean Notify( VoltageComponent component, ModuleNotifications notificat
 	
 		case Jack_Connected:   // longValue is the new cable ID
 		{
+			if(component == in3) in3Connected = true;
+			else if(component == in5) in5Connected = true;
+			else if(component == in7) in7Connected = true;
 		}
 		break;
 	
 		case Jack_Disconnected:   // All cables have been disconnected from this jack
 		{
+			if(component == in3) in3Connected = false;
+			else if(component == in5) in5Connected = false;
+			else if(component == in7) in7Connected = false;
 		}
 		break;
 	
 		case GUI_Update_Timer:   // Called every 50ms (by default) if turned on
 		{
+			led2.SetValue(div2 ? 1.0 : 0.0);
+			led4.SetValue(div4 ? 1.0 : 0.0);
+			led8.SetValue(div8 ? 1.0 : 0.0);
+			led16.SetValue(div16 ? 1.0 : 0.0);
+			led32.SetValue(div32 ? 1.0 : 0.0);
+			led64.SetValue(div64 ? 1.0 : 0.0);
+			led128.SetValue(div128 ? 1.0 : 0.0);
+			led256.SetValue(div256 ? 1.0 : 0.0);
+			
+			led3.SetValue(div3 ? 1.0 : 0.0);
+			led3Div2.SetValue(div3div2 ? 1.0 : 0.0);
+			
+			led5.SetValue(div5 ? 1.0 : 0.0);
+			led5Div2.SetValue(div5div2 ? 1.0 : 0.0);
+			
+			led7.SetValue(div7 ? 1.0 : 0.0);
+			led7Div2.SetValue(div7div2 ? 1.0 : 0.0);
 		}
 		break;
 	
@@ -293,7 +617,117 @@ public void ProcessSample()
 {
 	//[user-ProcessSample]   Add your own process-sampling code here
 
+	double mainClock = inMain.GetValue();
+	double clock3 = in3Connected ? in3.GetValue() : mainClock;
+	double clock5 = in5Connected ? in5.GetValue() : mainClock;
+	double clock7 = in7Connected ? in7.GetValue() : mainClock;
 
+	if(clockIn1.process(mainClock))
+	{
+
+		if(stepCount1 == 256) stepCount1 = 1;
+		else stepCount1++;
+
+		if (stepCount1 % 2 == 0)
+		{
+			div2 = !div2;
+
+			if (stepCount1 % 4 == 0)
+			{
+				div4 = ! div4;
+
+				if (stepCount1 % 8 == 0)
+				{
+					div8 = !div8;
+
+					if (stepCount1 % 16 == 0)
+					{
+						div16 = ! div16;
+						if (stepCount1 % 32 == 0)
+						{
+							div32 = ! div32;
+							if (stepCount1 % 64 == 0)
+							{
+								div64 = ! div64;
+								if (stepCount1 % 128 == 0)
+								{
+									div128 = ! div128;
+									if (stepCount1 % 256 == 0)
+									{
+										div256 = ! div256;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	if(clockIn3.process(clock3))
+	{
+		if(stepCount3 == 6) stepCount3 = 1;
+		else stepCount3++;
+		
+		if (stepCount3 % 3 == 0)
+		{
+			div3div2 = !div3div2;
+			if (stepCount3 % 6 == 0)
+			{
+				div3 = !div3;
+			}
+		}
+	}
+	
+	if(clockIn5.process(clock5))
+	{
+		if(stepCount5 == 10) stepCount5 = 1;
+		else stepCount5++;
+		
+		if (stepCount5 % 5 == 0)
+		{
+			div5div2 = !div5div2;
+			if (stepCount5 % 10 == 0)
+			{
+				div5 = !div5;
+			}
+		}
+	}
+	
+	if(clockIn7.process(clock7))
+	{
+		if(stepCount7 == 14) stepCount7 = 1;
+		else stepCount7++;
+		
+		if (stepCount7 % 7 == 0)
+		{
+			div7div2 = !div7div2;
+			if (stepCount7 % 14 == 0)
+			{
+				div7 = !div7;
+			}
+		}
+	}
+	
+	double gateOutValue = 5.0;
+	out2.SetValue(div2 ? gateOutValue : 0.0);
+	out4.SetValue(div4 ? gateOutValue : 0.0);
+	out8.SetValue(div8 ? gateOutValue : 0.0);
+	out16.SetValue(div16 ? gateOutValue : 0.0);
+	out32.SetValue(div32 ? gateOutValue : 0.0);
+	out64.SetValue(div64 ? gateOutValue : 0.0);
+	out128.SetValue(div128 ? gateOutValue : 0.0);
+	out256.SetValue(div256 ? gateOutValue : 0.0);
+	
+	out3.SetValue(div3 ? gateOutValue : 0.0);
+	out3Div2.SetValue(div3div2 ? gateOutValue : 0.0);
+	
+	out5.SetValue(div5 ? gateOutValue : 0.0);
+	out5Div2.SetValue(div5div2 ? gateOutValue : 0.0);
+	
+	out7.SetValue(div7 ? gateOutValue : 0.0);
+	out7Div2.SetValue(div7div2 ? gateOutValue : 0.0);
 
 	//[/user-ProcessSample]
 }
@@ -428,15 +862,58 @@ public void SetStateInformationForVariations(byte[] stateInfo)
 
 
 // Auto-generated variables
+private VoltageLED led7Div2;
+private VoltageLED led5Div2;
+private VoltageLED led3Div2;
+private VoltageLED led256;
+private VoltageLED led128;
+private VoltageLED led64;
+private VoltageLED led32;
+private VoltageLED led16;
+private VoltageLED led8;
+private VoltageLED led7;
+private VoltageLED led5;
+private VoltageLED led4;
+private VoltageLED led3;
+private VoltageLED led2;
+private VoltageAudioJack out7Div2;
+private VoltageAudioJack out5Div2;
+private VoltageAudioJack out3Div2;
+private VoltageAudioJack out256;
+private VoltageAudioJack out128;
+private VoltageAudioJack out64;
+private VoltageAudioJack out32;
+private VoltageAudioJack out16;
+private VoltageAudioJack out8;
+private VoltageAudioJack out7;
+private VoltageAudioJack out5;
+private VoltageAudioJack out4;
+private VoltageAudioJack out3;
+private VoltageAudioJack out2;
+private VoltageAudioJack in7;
+private VoltageAudioJack in5;
+private VoltageAudioJack in3;
+private VoltageAudioJack inMain;
 
 
 //[user-code-and-variables]    Add your own variables and functions here
+
+int stepCount1, stepCount3, stepCount5, stepCount7;
+
+boolean div2, div4, div8, div16, div32, div64, div128, div256;
+boolean div3, div3div2;
+boolean div5, div5div2;
+boolean div7, div7div2;
+
+boolean in3Connected, in5Connected, in7Connected;
+
+private NLCTrigger clockIn1 = new NLCTrigger();
+private NLCTriggerDouble clockIn3 = new NLCTriggerDouble();
+private NLCTriggerDouble clockIn5 = new NLCTriggerDouble();
+private NLCTriggerDouble clockIn7 = new NLCTriggerDouble();
+
+
 //[/user-code-and-variables]
-
-
-
-
-
 }
 
  

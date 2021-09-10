@@ -62,7 +62,7 @@ public Cipher( long moduleID, VoltageObjects voltageObjects )
 
 
 	canBeBypassed = false;
-	SetSkin( "3d7a7e4048c7445c8848da6c49364924" );
+	SetSkin( "1290deafe57e414a953d04d6e170f159" );
 }
 
 void InitializeControls()
@@ -272,7 +272,7 @@ public void Initialize()
 	}
 	
 	bits[0] = true;
-
+	bitsOut[0] = true;
 	//[/user-Initialize]
 }
 

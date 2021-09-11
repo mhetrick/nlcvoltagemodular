@@ -97,7 +97,7 @@ public DivConquer( long moduleID, VoltageObjects voltageObjects )
 
 
 	canBeBypassed = false;
-	SetSkin( "a9d4e01f323c4c56a7def81dc69f5c2f" );
+	SetSkin( "2d612b3b9685418fa8cad94613ec154f" );
 }
 
 void InitializeControls()
@@ -623,47 +623,37 @@ public void ProcessSample()
 	double clock7 = in7Connected ? in7.GetValue() : mainClock;
 
 	if(clockIn1.process(mainClock))
-	{
-
-		if(stepCount1 == 256) stepCount1 = 1;
-		else stepCount1++;
-
-		if (stepCount1 % 2 == 0)
-		{
-			div2 = !div2;
-
-			if (stepCount1 % 4 == 0)
-			{
-				div4 = ! div4;
-
-				if (stepCount1 % 8 == 0)
-				{
-					div8 = !div8;
-
-					if (stepCount1 % 16 == 0)
-					{
-						div16 = ! div16;
-						if (stepCount1 % 32 == 0)
-						{
-							div32 = ! div32;
-							if (stepCount1 % 64 == 0)
-							{
-								div64 = ! div64;
-								if (stepCount1 % 128 == 0)
-								{
-									div128 = ! div128;
-									if (stepCount1 % 256 == 0)
-									{
-										div256 = ! div256;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+        {
+            div2 = !div2;
+            if(!div2)
+            {
+                div4 = !div4;
+                if(!div4)
+                {
+                    div8 = !div8;
+                    if(!div8)
+                    {
+                        div16 = !div16;
+                        if(!div16)
+                        {
+                            div32 = !div32;
+                            if(!div32)
+                            {
+                                div64 = !div64;
+                                if(!div64)
+                                {
+                                    div128 = !div128;
+                                    if(!div128)
+                                    {
+                                        div256 = !div256;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 	
 	if(clockIn3.process(clock3))
 	{
@@ -672,11 +662,7 @@ public void ProcessSample()
 		
 		if (stepCount3 % 3 == 0)
 		{
-			div3div2 = !div3div2;
-			if (stepCount3 % 6 == 0)
-			{
-				div3 = !div3;
-			}
+			div3 = !div3;
 		}
 	}
 	

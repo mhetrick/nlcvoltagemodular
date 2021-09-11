@@ -46,8 +46,7 @@ class NLCTrigger
 	}
 };
 
-class NLCTriggerDouble
-{
+class BooleanTrigger {
 	boolean state = true;
 
 	void reset() 
@@ -55,29 +54,11 @@ class NLCTriggerDouble
 		state = true;
 	}
 
-	boolean process(double in) {
-		if (state) {
-			// HIGH to LOW
-			if (in < 1.0) 
-			{
-				state = false;
-				return true;
-			}
-		}
-		else {
-			// LOW to HIGH
-			if (in >= 1.0) 
-			{
-				state = true;
-				return true;
-			}
-		}
-		return false;
-	}
-
-	boolean isHigh() 
+	boolean process(boolean _state) 
 	{
-		return state;
+		boolean triggered = (_state && !state);
+		state = _state;
+		return triggered;
 	}
 };
 
@@ -655,46 +636,9 @@ public void ProcessSample()
             }
         }
 	
-	if(clockIn3.process(clock3))
-	{
-		if(stepCount3 == 6) stepCount3 = 1;
-		else stepCount3++;
-		
-		if (stepCount3 % 3 == 0)
-		{
-			div3 = !div3;
-		}
-	}
-	
-	if(clockIn5.process(clock5))
-	{
-		if(stepCount5 == 10) stepCount5 = 1;
-		else stepCount5++;
-		
-		if (stepCount5 % 5 == 0)
-		{
-			div5div2 = !div5div2;
-			if (stepCount5 % 10 == 0)
-			{
-				div5 = !div5;
-			}
-		}
-	}
-	
-	if(clockIn7.process(clock7))
-	{
-		if(stepCount7 == 14) stepCount7 = 1;
-		else stepCount7++;
-		
-		if (stepCount7 % 7 == 0)
-		{
-			div7div2 = !div7div2;
-			if (stepCount7 % 14 == 0)
-			{
-				div7 = !div7;
-			}
-		}
-	}
+	processClock3Row(clock3);
+	processClock5Row(clock5);
+	processClock7Row(clock7);
 	
 	double gateOutValue = 5.0;
 	out2.SetValue(div2 ? gateOutValue : 0.0);
@@ -707,13 +651,13 @@ public void ProcessSample()
 	out256.SetValue(div256 ? gateOutValue : 0.0);
 	
 	out3.SetValue(div3 ? gateOutValue : 0.0);
-	out3Div2.SetValue(div3div2 ? gateOutValue : 0.0);
+	out3Div2.SetValue(!div3div2 ? gateOutValue : 0.0);
 	
 	out5.SetValue(div5 ? gateOutValue : 0.0);
 	out5Div2.SetValue(div5div2 ? gateOutValue : 0.0);
 	
 	out7.SetValue(div7 ? gateOutValue : 0.0);
-	out7Div2.SetValue(div7div2 ? gateOutValue : 0.0);
+	out7Div2.SetValue(!div7div2 ? gateOutValue : 0.0);
 
 	//[/user-ProcessSample]
 }
@@ -884,19 +828,91 @@ private VoltageAudioJack inMain;
 
 //[user-code-and-variables]    Add your own variables and functions here
 
+private void processClock3Row(double clock3)
+{
+	boolean clock3xor = (clock3 > 1.0) != div3;
+	
+	//if xor is true, trigger div3div2 flipflop
+	if(flipflop3div2.process(clock3xor))
+	{
+		div3div2 = !div3div2;
+	}
+
+	//div3div2's output is high when div3div2's flipflop
+	//is low
+	
+	//when div3div2's flipflop goes high, trigger
+	//div3's flipflop
+	if(flipflop3.process(div3div2))
+	{
+		div3 = !div3;
+	}
+}
+
+private void processClock5Row(double clock5)
+{
+	boolean clock5xor = (clock5 > 1.0) != div5;
+	
+	if(flipflop5helper.process(clock5xor))
+	{
+		div5helper = !div5helper;
+	}
+	
+	boolean helperxor = div5helper != div5;
+	
+	if(flipflop5div2.process(helperxor))
+	{
+		div5div2 = !div5div2;
+	}
+	
+	if(flipflop5.process(div5div2))
+	{
+		div5 = !div5;
+	}
+}
+
+private void processClock7Row(double clock7)
+{
+	boolean clock7xor = (clock7 > 1.0) != div7;
+	
+	if(flipflop7helper.process(clock7xor))
+	{
+		div7helper = !div7helper;
+	}
+	
+	if(flipflop7div2.process(div7helper))
+	{
+		div7div2 = !div7div2;
+	}
+	
+	if(flipflop7.process(div7div2))
+	{
+		div7 = !div7;
+	}
+	
+}
+
 int stepCount1, stepCount3, stepCount5, stepCount7;
 
 boolean div2, div4, div8, div16, div32, div64, div128, div256;
 boolean div3, div3div2;
-boolean div5, div5div2;
-boolean div7, div7div2;
+boolean div5, div5div2, div5helper;
+boolean div7, div7div2, div7helper;
 
 boolean in3Connected, in5Connected, in7Connected;
 
 private NLCTrigger clockIn1 = new NLCTrigger();
-private NLCTriggerDouble clockIn3 = new NLCTriggerDouble();
-private NLCTriggerDouble clockIn5 = new NLCTriggerDouble();
-private NLCTriggerDouble clockIn7 = new NLCTriggerDouble();
+
+private BooleanTrigger flipflop3div2 = new BooleanTrigger();
+private BooleanTrigger flipflop3 = new BooleanTrigger();
+
+private BooleanTrigger flipflop5div2 = new BooleanTrigger();
+private BooleanTrigger flipflop5helper = new BooleanTrigger();
+private BooleanTrigger flipflop5 = new BooleanTrigger();
+
+private BooleanTrigger flipflop7div2 = new BooleanTrigger();
+private BooleanTrigger flipflop7helper = new BooleanTrigger();
+private BooleanTrigger flipflop7 = new BooleanTrigger();
 
 
 //[/user-code-and-variables]

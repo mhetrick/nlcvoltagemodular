@@ -62,7 +62,7 @@ public DivineCMOS( long moduleID, VoltageObjects voltageObjects )
 
 
 	canBeBypassed = false;
-	SetSkin( "057ba53c2f0b40c08adf0d86ef98d694" );
+	SetSkin( "eb273a2e52ef422c8fe8c14c73ff75c8" );
 }
 
 void InitializeControls()
@@ -131,6 +131,34 @@ void InitializeControls()
 	LED1.SetSize( 11, 11 );
 	LED1.SetSkin( "Silver Backed Blue" );
 
+	LED2 = new VoltageLED( "LED2", "LED2", this );
+	AddComponent( LED2 );
+	LED2.SetWantsMouseNotifications( false );
+	LED2.SetPosition( 39, 319 );
+	LED2.SetSize( 11, 11 );
+	LED2.SetSkin( "Silver Backed Blue" );
+
+	LED3 = new VoltageLED( "LED3", "LED3", this );
+	AddComponent( LED3 );
+	LED3.SetWantsMouseNotifications( false );
+	LED3.SetPosition( 67, 319 );
+	LED3.SetSize( 11, 11 );
+	LED3.SetSkin( "Silver Backed Blue" );
+
+	LED4 = new VoltageLED( "LED4", "LED4", this );
+	AddComponent( LED4 );
+	LED4.SetWantsMouseNotifications( false );
+	LED4.SetPosition( 95, 319 );
+	LED4.SetSize( 11, 11 );
+	LED4.SetSkin( "Silver Backed Blue" );
+
+	LED5 = new VoltageLED( "LED5", "LED5", this );
+	AddComponent( LED5 );
+	LED5.SetWantsMouseNotifications( false );
+	LED5.SetPosition( 80, 174 );
+	LED5.SetSize( 11, 11 );
+	LED5.SetSkin( "Silver Backed Blue" );
+
 	in1 = new VoltageAudioJack( "in1", "In 1", this, JackType.JackType_AudioInput );
 	AddComponent( in1 );
 	in1.SetWantsMouseNotifications( false );
@@ -186,34 +214,6 @@ void InitializeControls()
 	div16Out.SetPosition( 88, 288 );
 	div16Out.SetSize( 25, 25 );
 	div16Out.SetSkin( "Jack Round 25px" );
-
-	LED2 = new VoltageLED( "LED2", "LED2", this );
-	AddComponent( LED2 );
-	LED2.SetWantsMouseNotifications( false );
-	LED2.SetPosition( 39, 319 );
-	LED2.SetSize( 11, 11 );
-	LED2.SetSkin( "Silver Backed Blue" );
-
-	LED3 = new VoltageLED( "LED3", "LED3", this );
-	AddComponent( LED3 );
-	LED3.SetWantsMouseNotifications( false );
-	LED3.SetPosition( 67, 319 );
-	LED3.SetSize( 11, 11 );
-	LED3.SetSkin( "Silver Backed Blue" );
-
-	LED4 = new VoltageLED( "LED4", "LED4", this );
-	AddComponent( LED4 );
-	LED4.SetWantsMouseNotifications( false );
-	LED4.SetPosition( 95, 319 );
-	LED4.SetSize( 11, 11 );
-	LED4.SetSkin( "Silver Backed Blue" );
-
-	LED5 = new VoltageLED( "LED5", "LED5", this );
-	AddComponent( LED5 );
-	LED5.SetWantsMouseNotifications( false );
-	LED5.SetPosition( 80, 174 );
-	LED5.SetSize( 11, 11 );
-	LED5.SetSkin( "Silver Backed Blue" );
 }
 
 
@@ -500,25 +500,16 @@ public void ProcessSample()
 	if(clockIn1.process(in1.GetValue()))
 	{
 
-		if(stepCount1 == 16) stepCount1 = 1;
-		else stepCount1++;
-
-		if (stepCount1 % 2 == 0)
+		in1div2 = !in1div2;
+		if(!in1div2)
 		{
-			in1div2 = !in1div2;
-
-			if (stepCount1 % 4 == 0)
+			in1div4 = !in1div4;
+			if(!in1div4)
 			{
-				in1div4 = ! in1div4;
-
-				if (stepCount1 % 8 == 0)
+				in1div8 = !in1div8;
+				if(!in1div8)
 				{
-					 	in1div8 = !in1div8;
-
-						if (stepCount1 % 16 == 0)
-						{
-							in1div16 = ! in1div16;
-						}
+					in1div16 = !in1div16;
 				}
 			}
 		}
@@ -526,26 +517,16 @@ public void ProcessSample()
 
 	if(clockIn2.process(in2.GetValue()))
 	{
-
-		if(stepCount2 == 16) stepCount2 = 1;
-		else stepCount2++;
-
-		if (stepCount2 % 2 == 0)
+		in2div2 = !in2div2;
+		if(!in2div2)
 		{
-			in2div2 = !in2div2;
-
-			if (stepCount2 % 4 == 0)
+			in2div4 = !in2div4;
+			if(!in2div4)
 			{
-				in2div4 = ! in2div4;
-
-				if (stepCount2 % 8 == 0)
+				in2div8 = !in2div8;
+				if(!in2div8)
 				{
-					 	in2div8 = !in2div8;
-
-						if (stepCount2 % 16 == 0)
-						{
-							in2div16 = ! in2div16;
-						}
+					in2div16 = !in2div16;
 				}
 			}
 		}
@@ -706,10 +687,6 @@ public void SetStateInformationForVariations(byte[] stateInfo)
 
 
 // Auto-generated variables
-private VoltageLED LED5;
-private VoltageLED LED4;
-private VoltageLED LED3;
-private VoltageLED LED2;
 private VoltageAudioJack div16Out;
 private VoltageAudioJack div8Out;
 private VoltageAudioJack div4Out;
@@ -718,6 +695,10 @@ private VoltageAudioJack mainOut;
 private VoltageAudioJack slewOut;
 private VoltageAudioJack in2;
 private VoltageAudioJack in1;
+private VoltageLED LED5;
+private VoltageLED LED4;
+private VoltageLED LED3;
+private VoltageLED LED2;
 private VoltageLED LED1;
 private VoltageKnob slewKnob;
 private VoltageKnob div16Gain;
@@ -728,8 +709,6 @@ private VoltageKnob div2Gain;
 
 //[user-code-and-variables]    Add your own variables and functions here
 
-int stepCount1 = 0;
-int stepCount2 = 0;
 boolean in1div2, in1div4, in1div8, in1div16;
 boolean in2div2, in2div4, in2div8, in2div16;
 boolean div2Active, div4Active, div8Active, div16Active;

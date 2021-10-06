@@ -62,7 +62,7 @@ public FourSeq( long moduleID, VoltageObjects voltageObjects )
 
 
 	canBeBypassed = false;
-	SetSkin( "1dc753d33bae4934a497d2933ff2ab33" );
+	SetSkin( "ad54b8154e0b4b05bf84e6c419350f51" );
 }
 
 void InitializeControls()

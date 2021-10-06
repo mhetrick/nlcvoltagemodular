@@ -62,7 +62,7 @@ public FourSeq( long moduleID, VoltageObjects voltageObjects )
 
 
 	canBeBypassed = false;
-	SetSkin( "ad54b8154e0b4b05bf84e6c419350f51" );
+	SetSkin( "f20a96f8fb1548069d7e637d517af447" );
 }
 
 void InitializeControls()
@@ -101,13 +101,13 @@ void InitializeControls()
 	knob3.DisplayValueInPercent( true );
 	knob3.SetKnobAdjustsRing( true );
 
-	knob4 = new VoltageKnob( "knob4", "X3/Y0", this, 0.0, 1.0, 0.0 );
+	knob4 = new VoltageKnob( "knob4", "X3/Y0", this, 0.0, 5.0, 0.0 );
 	AddComponent( knob4 );
 	knob4.SetWantsMouseNotifications( false );
 	knob4.SetPosition( 69, 123 );
 	knob4.SetSize( 35, 35 );
 	knob4.SetSkin( "Knurled Plastic White" );
-	knob4.SetRange( 0.0, 1.0, 0.0, false, 0 );
+	knob4.SetRange( 0.0, 5.0, 0.0, false, 0 );
 	knob4.SetKnobParams( 215, 145 );
 	knob4.DisplayValueInPercent( true );
 	knob4.SetKnobAdjustsRing( true );

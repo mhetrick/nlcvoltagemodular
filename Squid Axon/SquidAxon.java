@@ -63,7 +63,7 @@ public SquidAxon( long moduleID, VoltageObjects voltageObjects )
 
 
 	canBeBypassed = false;
-	SetSkin( "525f6053c37948f78447bd70f0c456ec" );
+	SetSkin( "93af11744e8c42978f403341c5c61886" );
 }
 
 void InitializeControls()
@@ -462,9 +462,9 @@ public void ProcessSample()
 
 
 	out1.SetValue(outs[0]);
-	out2.SetValue(outs[0]);
-	out3.SetValue(outs[0]);
-	out4.SetValue(outs[0]);
+	out2.SetValue(outs[1]);
+	out3.SetValue(outs[2]);
+	out4.SetValue(outs[3]);
 
 	//[/user-ProcessSample]
 }

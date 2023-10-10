@@ -63,7 +63,7 @@ public SquidAxon( long moduleID, VoltageObjects voltageObjects )
 
 
 	canBeBypassed = false;
-	SetSkin( "93af11744e8c42978f403341c5c61886" );
+	SetSkin( "2c3db8628dac4dfa8e6a8d031bbf4458" );
 }
 
 void InitializeControls()

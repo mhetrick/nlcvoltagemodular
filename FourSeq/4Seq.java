@@ -62,7 +62,7 @@ public FourSeq( long moduleID, VoltageObjects voltageObjects )
 
 
 	canBeBypassed = false;
-	SetSkin( "d5a37aef60854324bbe23ce2b85db428" );
+	SetSkin( "f20a96f8fb1548069d7e637d517af447" );
 }
 
 void InitializeControls()
@@ -101,13 +101,13 @@ void InitializeControls()
 	knob3.DisplayValueInPercent( true );
 	knob3.SetKnobAdjustsRing( true );
 
-	knob4 = new VoltageKnob( "knob4", "X3/Y0", this, 0.0, 1.0, 0.0 );
+	knob4 = new VoltageKnob( "knob4", "X3/Y0", this, 0.0, 5.0, 0.0 );
 	AddComponent( knob4 );
 	knob4.SetWantsMouseNotifications( false );
 	knob4.SetPosition( 69, 123 );
 	knob4.SetSize( 35, 35 );
 	knob4.SetSkin( "Knurled Plastic White" );
-	knob4.SetRange( 0.0, 1.0, 0.0, false, 0 );
+	knob4.SetRange( 0.0, 5.0, 0.0, false, 0 );
 	knob4.SetKnobParams( 215, 145 );
 	knob4.DisplayValueInPercent( true );
 	knob4.SetKnobAdjustsRing( true );
@@ -489,24 +489,10 @@ public void ProcessSample()
 		if(stepCount == 16) stepCount = 1;
 		else stepCount++;
 
-		if (stepCount % 2 == 0)
+		for(int i = 0; i < 4; i++)
 		{
-			divBools[0] = !divBools[0];
-
-			if (stepCount % 4 == 0)
-			{
-				divBools[1] = ! divBools[1];
-
-				if (stepCount % 8 == 0)
-				{
-						divBools[2] = !divBools[2];
-
-						if (stepCount % 16 == 0)
-						{
-							divBools[3] = ! divBools[3];
-						}
-				}
-			}
+			divBools[i] = !divBools[i];
+			if(divBools[i]) break;
 		}
 	}
 
